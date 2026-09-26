@@ -25,16 +25,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     {
       video.kind === 'file' && (
-        <video
-          src={`${base}/${video.src.replace(/^\//, '')}`}
-          poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
-          playsinline
-          preload="metadata"
-          controls
-          controlslist="nodownload"
-          data-portfolio-video
-          aria-label={video.title}
-        />
+        <>
+          <video
+            src={`${base}/${video.src.replace(/^\//, '')}`}
+            poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
+            playsinline
+            preload="metadata"
+            controlslist="nodownload"
+            data-portfolio-video
+            aria-label={video.title}
+          />
+          <button class="play-overlay" type="button" aria-label={`Reproducir ${video.title}`}>
+            <span class="play-button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z" />
+              </svg>
+            </span>
+          </button>
+        </>
       )
     }
     {
@@ -51,6 +59,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   /* Subtle blue rounded border hugging the video's edges. */
   .card {
     margin: 0;
+    position: relative;
     overflow: hidden;
     border: 2px solid rgb(20 80 255 / 0.55);
     border-radius: 16px;
@@ -109,6 +118,72 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     object-fit: contain;
     border-radius: 0;
   }
+  /* Big play button shown until the first play; it vanishes on press, not on release. */
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: radial-gradient(circle at center, rgb(0 0 0 / 0.18), transparent 70%);
+    cursor: pointer;
+    transition: opacity 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .play-button {
+    display: grid;
+    place-items: center;
+    width: clamp(52px, 5.5vw, 72px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--paper);
+    box-shadow: 0 8px 24px -6px rgb(20 80 255 / 0.7);
+    transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .play-button svg {
+    width: 44%;
+    height: 44%;
+    margin-left: 6%;
+  }
+  .play-overlay:hover .play-button,
+  .play-overlay:focus-visible .play-button {
+    transform: scale(1.08);
+  }
+  .play-overlay:active .play-button {
+    transform: scale(0.94);
+  }
+  .play-overlay:focus-visible {
+    outline: none;
+  }
+  .card.is-started .play-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Loading ring while the browser waits for data. */
+  .card.is-buffering::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 50%;
+    border: 3px solid rgb(228 228 225 / 0.3);
+    border-top-color: var(--paper);
+    animation: spin 0.7s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .placeholder {
     position: absolute;
     inset: 0;

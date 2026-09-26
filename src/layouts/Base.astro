@@ -43,13 +43,45 @@ const { title, description } = Astro.props;
 
       // Videos play only on click, always with sound, and one at a time.
       const videos = document.querySelectorAll<HTMLVideoElement>('video[data-portfolio-video]');
+
+      // Buffer videos as they get close to the screen, so pressing play starts right away.
+      const preloader = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              (entry.target as HTMLVideoElement).preload = 'auto';
+              preloader.unobserve(entry.target);
+            }
+          }
+        },
+        { rootMargin: '400px 0px' },
+      );
+
       videos.forEach((video) => {
         const card = video.closest('.card');
-        // Start buffering as soon as the pointer approaches, so the click plays instantly.
-        card?.addEventListener('pointerenter', () => {
-          if (video.preload !== 'auto') video.preload = 'auto';
+        const overlay = card?.querySelector<HTMLButtonElement>('.play-overlay');
+        preloader.observe(video);
+
+        const start = () => {
+          if (card?.classList.contains('is-started')) return;
+          card?.classList.add('is-started'); // instant visual feedback
+          video.controls = true;
+          video.muted = false;
+          void video.play().catch(() => {
+            // Playback refused (rare): bring the button back.
+            card?.classList.remove('is-started');
+            video.controls = false;
+          });
+        };
+        // pointerdown fires on press, ~100 ms before click; click still covers the keyboard.
+        overlay?.addEventListener('pointerdown', (event) => {
+          if (event.button === 0) start();
         });
+        overlay?.addEventListener('click', start);
+
         video.addEventListener('play', () => {
+          card?.classList.add('is-started');
+          video.controls = true;
           video.muted = false;
           if (video.volume === 0) video.volume = 1;
           videos.forEach((other) => {
@@ -57,8 +89,10 @@ const { title, description } = Astro.props;
           });
           card?.classList.add('is-playing');
         });
-        video.addEventListener('pause', () => card?.classList.remove('is-playing'));
-        video.addEventListener('ended', () => card?.classList.remove('is-playing'));
+        video.addEventListener('pause', () => card?.classList.remove('is-playing', 'is-buffering'));
+        video.addEventListener('ended', () => card?.classList.remove('is-playing', 'is-buffering'));
+        video.addEventListener('waiting', () => card?.classList.add('is-buffering'));
+        video.addEventListener('playing', () => card?.classList.remove('is-buffering'));
       });
     </script>
   </body>
