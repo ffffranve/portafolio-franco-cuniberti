@@ -25,24 +25,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     {
       video.kind === 'file' && (
-        <>
-          <video
-            src={`${base}/${video.src.replace(/^\//, '')}`}
-            poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
-            playsinline
-            preload="metadata"
-            controlslist="nodownload"
-            data-portfolio-video
-            aria-label={video.title}
-          />
-          <button class="play-overlay" type="button" aria-label={`Reproducir ${video.title}`}>
-            <span class="play-button">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z" />
-              </svg>
-            </span>
-          </button>
-        </>
+        <video
+          src={`${base}/${video.src.replace(/^\//, '')}`}
+          poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
+          playsinline
+          preload="metadata"
+          controls
+          controlslist="nodownload"
+          data-portfolio-video
+          aria-label={video.title}
+        />
       )
     }
     {
@@ -118,58 +110,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     object-fit: contain;
     border-radius: 0;
   }
-  /* Big play button shown until the first play; it vanishes on press, not on release. */
-  .play-overlay {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    padding: 0;
-    border: 0;
-    background: transparent;
+  /* Video area reacts on press (see Base.astro), so show it's clickable. */
+  video {
     cursor: pointer;
-    transition: opacity 0.12s ease;
-    -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-  }
-  /* Subtle glassy play mark: barely there until you hover the video. */
-  .play-button {
-    display: grid;
-    place-items: center;
-    width: clamp(38px, 3.6vw, 46px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: rgb(255 255 255 / 0.12);
-    border: 1px solid rgb(255 255 255 / 0.35);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    color: rgb(255 255 255 / 0.9);
-    opacity: 0.7;
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
-      background 0.2s ease;
-  }
-  .play-button svg {
-    width: 40%;
-    height: 40%;
-    margin-left: 8%;
-  }
-  .card:hover .play-button,
-  .play-overlay:focus-visible .play-button {
-    opacity: 1;
-    background: rgb(255 255 255 / 0.2);
-    transform: scale(1.06);
-  }
-  .play-overlay:active .play-button {
-    transform: scale(0.94);
-  }
-  .play-overlay:focus-visible {
-    outline: none;
-  }
-  .card.is-started .play-overlay {
-    opacity: 0;
-    pointer-events: none;
   }
 
   /* Loading ring while the browser waits for data. */

@@ -57,31 +57,37 @@ const { title, description } = Astro.props;
         { rootMargin: '400px 0px' },
       );
 
+      // Height of the native control bar: presses there are left to the browser.
+      const CONTROLS_ZONE = 56;
+
       videos.forEach((video) => {
         const card = video.closest('.card');
-        const overlay = card?.querySelector<HTMLButtonElement>('.play-overlay');
         preloader.observe(video);
 
-        const start = () => {
-          if (card?.classList.contains('is-started')) return;
-          card?.classList.add('is-started'); // instant visual feedback
-          video.controls = true;
-          video.muted = false;
-          void video.play().catch(() => {
-            // Playback refused (rare): bring the button back.
-            card?.classList.remove('is-started');
-            video.controls = false;
-          });
-        };
-        // pointerdown fires on press, ~100 ms before click; click still covers the keyboard.
-        overlay?.addEventListener('pointerdown', (event) => {
-          if (event.button === 0) start();
+        // Toggle on press (pointerdown), not on release: it fires ~100 ms earlier than the
+        // browser's own click-to-play, so starting and resuming feel instant.
+        let handledPress = false;
+        video.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0) return;
+          const rect = video.getBoundingClientRect();
+          if (event.clientY > rect.bottom - CONTROLS_ZONE) return;
+          handledPress = true;
+          if (video.paused || video.ended) {
+            video.muted = false;
+            void video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
         });
-        overlay?.addEventListener('click', start);
+        // Cancel the browser's own toggle for that same press, or it would undo ours.
+        video.addEventListener('click', (event) => {
+          if (handledPress) {
+            event.preventDefault();
+            handledPress = false;
+          }
+        });
 
         video.addEventListener('play', () => {
-          card?.classList.add('is-started');
-          video.controls = true;
           video.muted = false;
           if (video.volume === 0) video.volume = 1;
           videos.forEach((other) => {
