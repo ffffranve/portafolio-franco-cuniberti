@@ -45,6 +45,10 @@ const { title, description } = Astro.props;
       const videos = document.querySelectorAll<HTMLVideoElement>('video[data-portfolio-video]');
       videos.forEach((video) => {
         const card = video.closest('.card');
+        // Start buffering as soon as the pointer approaches, so the click plays instantly.
+        card?.addEventListener('pointerenter', () => {
+          if (video.preload !== 'auto') video.preload = 'auto';
+        });
         video.addEventListener('play', () => {
           video.muted = false;
           if (video.volume === 0) video.volume = 1;

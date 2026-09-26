@@ -56,6 +56,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-radius: 16px;
     background: #000;
     background-clip: padding-box; /* keep the black out from under the translucent border */
+    will-change: transform; /* own compositor layer: hover lift doesn't repaint the video */
     transition:
       opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
       border-color 0.3s ease,
