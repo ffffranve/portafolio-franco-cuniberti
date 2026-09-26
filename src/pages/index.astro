@@ -291,7 +291,7 @@ const year = new Date().getFullYear();
   }
   /* Only two long videos: side by side, breaking out wider than the text column. */
   .grid-long {
-    --long-width: min(1440px, calc(100vw - 2 * var(--gutter)));
+    --long-width: min(1300px, calc(100vw - 3 * var(--gutter)));
     grid-template-columns: repeat(2, 1fr);
     gap: clamp(16px, 2.4vw, 36px);
     width: var(--long-width);
