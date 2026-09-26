@@ -4,8 +4,8 @@
 
 :root {
   --paper: #e4e4e1;
-  --blue: #1450ff;
-  --red: #e3261f;
+  --accent: #e3261f; /* the single site color: red */
+  --accent-rgb: 227 38 31;
   --ink-soft: rgb(0 0 0 / 0.08);
 
   --serif: 'Instrument Serif', 'Times New Roman', serif;
@@ -29,7 +29,7 @@ html {
 body {
   margin: 0;
   background: var(--paper);
-  color: var(--blue);
+  color: var(--accent);
   font-family: var(--body);
   font-size: 16px;
   line-height: 1.45;
@@ -55,15 +55,8 @@ a {
 }
 
 ::selection {
-  background: var(--blue);
+  background: var(--accent);
   color: var(--paper);
-}
-
-.red {
-  color: var(--red);
-}
-.blue {
-  color: var(--blue);
 }
 
 /* Display type */
