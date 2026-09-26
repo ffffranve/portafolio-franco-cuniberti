@@ -31,15 +31,15 @@ export const programs: { short: string; name: string }[] = [
 ];
 
 export const shortVideos: Video[] = [
-  { kind: 'placeholder', title: 'Video corto 1' },
-  { kind: 'placeholder', title: 'Video corto 2' },
-  { kind: 'placeholder', title: 'Video corto 3' },
-  { kind: 'placeholder', title: 'Video corto 4' },
-  { kind: 'placeholder', title: 'Video corto 5' },
-  { kind: 'placeholder', title: 'Video corto 6' },
+  { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
+  { kind: 'file', src: 'videos/corto-2-mustaccio.mp4', poster: 'videos/corto-2-mustaccio.jpg', title: 'Mustaccio' },
+  { kind: 'file', src: 'videos/corto-3-paises.mp4', poster: 'videos/corto-3-paises.jpg', title: 'Países' },
+  { kind: 'file', src: 'videos/corto-4-publi.mp4', poster: 'videos/corto-4-publi.jpg', title: 'Publicidad' },
+  { kind: 'file', src: 'videos/corto-5-franve.mp4', poster: 'videos/corto-5-franve.jpg', title: 'Franve' },
+  { kind: 'file', src: 'videos/corto-6-guion.mp4', poster: 'videos/corto-6-guion.jpg', title: 'Guion' },
 ];
 
 export const longVideos: Video[] = [
-  { kind: 'placeholder', title: 'Video largo 1' },
-  { kind: 'placeholder', title: 'Video largo 2' },
+  { kind: 'file', src: 'videos/largo-1-top-tier.mp4', poster: 'videos/largo-1-top-tier.jpg', title: 'Top tier' },
+  { kind: 'file', src: 'videos/largo-2-muestra.mp4', poster: 'videos/largo-2-muestra.jpg', title: 'Muestra' },
 ];
