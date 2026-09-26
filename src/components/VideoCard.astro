@@ -126,31 +126,40 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     place-items: center;
     padding: 0;
     border: 0;
-    background: radial-gradient(circle at center, rgb(0 0 0 / 0.18), transparent 70%);
+    background: transparent;
     cursor: pointer;
     transition: opacity 0.12s ease;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
+  /* Subtle glassy play mark: barely there until you hover the video. */
   .play-button {
     display: grid;
     place-items: center;
-    width: clamp(52px, 5.5vw, 72px);
+    width: clamp(38px, 3.6vw, 46px);
     aspect-ratio: 1;
     border-radius: 50%;
-    background: var(--blue);
-    color: var(--paper);
-    box-shadow: 0 8px 24px -6px rgb(20 80 255 / 0.7);
-    transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+    background: rgb(255 255 255 / 0.12);
+    border: 1px solid rgb(255 255 255 / 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: rgb(255 255 255 / 0.9);
+    opacity: 0.7;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+      background 0.2s ease;
   }
   .play-button svg {
-    width: 44%;
-    height: 44%;
-    margin-left: 6%;
+    width: 40%;
+    height: 40%;
+    margin-left: 8%;
   }
-  .play-overlay:hover .play-button,
+  .card:hover .play-button,
   .play-overlay:focus-visible .play-button {
-    transform: scale(1.08);
+    opacity: 1;
+    background: rgb(255 255 255 / 0.2);
+    transform: scale(1.06);
   }
   .play-overlay:active .play-button {
     transform: scale(0.94);
