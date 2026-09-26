@@ -23,11 +23,28 @@ const { title, description } = Astro.props;
     <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/apple-touch-icon.png`} />
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Always open at the top (the name), never at a remembered position or a #section link.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
     </script>
   </head>
   <body>
     <slot />
     <script>
+      // Start at the top on every load (covers browsers that jump after the head script ran).
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // In-page links (Proyectos, etc.) scroll smoothly without adding #section to the URL,
+      // so reloading or sharing the link never opens halfway down the page.
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const target = document.querySelector(link.getAttribute('href') ?? '');
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
       // Fade sections in as they scroll into view.
       const observer = new IntersectionObserver(
         (entries) => {
