@@ -41,10 +41,16 @@ const { title, description } = Astro.props;
       );
       document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
 
-      // Local video files preview on hover, like scrubbing a timeline.
-      document.querySelectorAll<HTMLVideoElement>('video[data-hover-play]').forEach((video) => {
-        video.addEventListener('mouseenter', () => void video.play().catch(() => {}));
-        video.addEventListener('mouseleave', () => video.pause());
+      // Videos play only on click, always with sound, and one at a time.
+      const videos = document.querySelectorAll<HTMLVideoElement>('video[data-portfolio-video]');
+      videos.forEach((video) => {
+        video.addEventListener('play', () => {
+          video.muted = false;
+          if (video.volume === 0) video.volume = 1;
+          videos.forEach((other) => {
+            if (other !== video) other.pause();
+          });
+        });
       });
     </script>
   </body>

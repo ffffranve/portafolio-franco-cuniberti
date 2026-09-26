@@ -27,12 +27,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <video
         src={`${base}/${video.src.replace(/^\//, '')}`}
         poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
-        muted
-        loop
         playsinline
         preload="metadata"
         controls
-        data-hover-play
+        controlslist="nodownload"
+        data-portfolio-video
         aria-label={video.title}
       />
     )
@@ -69,9 +68,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     width: 100%;
     height: 100%;
     border: 0;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     background: #000;
+  }
+  /* Fullscreen: show the whole frame, never cropped or stretched. */
+  video:fullscreen {
+    position: static;
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    border-radius: 0;
   }
   .placeholder {
     position: absolute;
