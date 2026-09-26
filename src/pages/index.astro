@@ -126,12 +126,14 @@ const year = new Date().getFullYear();
     text-align: center;
     padding: 8vh 0 4vh;
   }
+  /* Shrink-wrapped to arrows + word, so hover only triggers from the arrows inward. */
   .projects-cue {
+    align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: clamp(16px, 3vw, 48px);
-    padding-bottom: clamp(36px, 7vh, 72px); /* room for the "y" descender */
+    margin-bottom: clamp(36px, 7vh, 72px); /* outside the hover area */
     text-decoration: none;
   }
   /* Underline that draws in from the left on hover, so "Proyectos" reads as a button. */
