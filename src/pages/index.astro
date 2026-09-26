@@ -39,12 +39,16 @@ const year = new Date().getFullYear();
     </header>
 
     <a class="projects-cue" href="#proyectos" data-reveal>
-      <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
+      <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 3l5 5 5-5"></path>
+        <path d="M7 10l5 5 5-5"></path>
+        <path d="M7 17l5 5 5-5"></path>
       </svg>
       <h2 class="serif section-serif">Proyectos</h2>
-      <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
+      <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 3l5 5 5-5"></path>
+        <path d="M7 10l5 5 5-5"></path>
+        <path d="M7 17l5 5 5-5"></path>
       </svg>
     </a>
     </div>
@@ -201,11 +205,29 @@ const year = new Date().getFullYear();
     width: clamp(24px, 2.4vw, 36px);
     height: clamp(24px, 2.4vw, 36px);
     flex: none;
-    animation: nudge 1.8s ease-in-out infinite;
   }
-  @keyframes nudge {
+  /* Triple chevron lighting up top to bottom, like a cascade. */
+  .chevrons path {
+    animation: cascade 1.2s ease-in-out infinite;
+  }
+  .chevrons path:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .chevrons path:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes cascade {
+    0%,
+    100% {
+      opacity: 0.15;
+    }
     50% {
-      transform: translateY(5px);
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chevrons path {
+      animation: none;
     }
   }
   .grid {
