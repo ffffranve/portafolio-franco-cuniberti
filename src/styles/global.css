@@ -84,13 +84,6 @@ a {
   line-height: 0.92;
 }
 
-.star {
-  display: inline-block;
-  width: 0.62em;
-  height: 0.62em;
-  flex: none;
-}
-
 /* Reveal on scroll (enabled by a tiny script; content stays visible without JS). */
 .js [data-reveal] {
   opacity: 0;

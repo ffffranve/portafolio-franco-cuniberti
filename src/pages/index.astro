@@ -1,7 +1,6 @@
 ---
 import { siDiscord, siGmail, siInstagram, siWhatsapp } from 'simple-icons';
 import Base from '../layouts/Base.astro';
-import Star from '../components/Star.astro';
 import VideoCard from '../components/VideoCard.astro';
 import { contact, longVideos, profile, shortVideos } from '../data/portfolio';
 
@@ -24,7 +23,7 @@ const year = new Date().getFullYear();
     <div class="intro">
     <header class="hero">
       <h1 class="hero-title">
-        <span class="serif hero-serif" data-reveal>{profile.name}<Star class="hero-star" /></span>
+        <span class="serif hero-serif" data-reveal>{profile.name}</span>
         <span class="wide hero-wide" data-reveal>{profile.role}</span>
       </h1>
       <p class="hero-meta serif" data-reveal>
@@ -43,7 +42,7 @@ const year = new Date().getFullYear();
       <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
       </svg>
-      <h2 class="serif section-serif">Proyectos<Star class="hero-star" /></h2>
+      <h2 class="serif section-serif">Proyectos</h2>
       <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
       </svg>
@@ -69,7 +68,7 @@ const year = new Date().getFullYear();
 
     <!-- Contact (red: it's about you) -->
     <footer class="contact red" id="contacto">
-      <h2 class="serif contact-serif" data-reveal>Contacto<Star class="hero-star" /></h2>
+      <h2 class="serif contact-serif" data-reveal>Contacto</h2>
       <p class="wide contact-wide" data-reveal>¿Hacemos algo juntos?</p>
 
       <ul class="contact-buttons" data-reveal>
@@ -149,11 +148,6 @@ const year = new Date().getFullYear();
     align-items: flex-start;
     gap: 0.02em;
   }
-  .hero-serif :global(.hero-star) {
-    width: 0.24em;
-    height: 0.24em;
-    margin-top: 0.34em;
-  }
   .hero-wide {
     font-size: clamp(24px, 5.6vw, 78px);
     margin-top: -0.08em;
@@ -198,12 +192,6 @@ const year = new Date().getFullYear();
     display: inline-flex;
     align-items: flex-start;
     font-size: clamp(72px, 12vw, 168px);
-  }
-  .section-serif :global(.hero-star),
-  .contact-serif :global(.hero-star) {
-    width: 0.22em;
-    height: 0.22em;
-    margin-top: 0.3em;
   }
   .section-wide {
     margin: 0;
