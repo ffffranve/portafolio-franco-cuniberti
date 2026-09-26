@@ -134,6 +134,31 @@ const year = new Date().getFullYear();
     padding-bottom: clamp(36px, 7vh, 72px); /* room for the "y" descender */
     text-decoration: none;
   }
+  /* Underline that draws in from the left on hover, so "Proyectos" reads as a button. */
+  .projects-cue .section-serif {
+    position: relative;
+    padding-bottom: 0.12em;
+  }
+  .projects-cue .section-serif::after {
+    content: '';
+    position: absolute;
+    left: 0.04em;
+    right: 0.04em;
+    bottom: 0;
+    height: clamp(2px, 0.22vw, 4px);
+    border-radius: 999px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .projects-cue:hover .section-serif::after,
+  .projects-cue:focus-visible .section-serif::after {
+    transform: scaleX(1);
+  }
+  .projects-cue:focus-visible {
+    outline: none;
+  }
   .projects-cue .chevrons {
     width: clamp(30px, 3.2vw, 52px);
     height: clamp(30px, 3.2vw, 52px);
