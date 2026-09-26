@@ -44,13 +44,17 @@ const { title, description } = Astro.props;
       // Videos play only on click, always with sound, and one at a time.
       const videos = document.querySelectorAll<HTMLVideoElement>('video[data-portfolio-video]');
       videos.forEach((video) => {
+        const card = video.closest('.card');
         video.addEventListener('play', () => {
           video.muted = false;
           if (video.volume === 0) video.volume = 1;
           videos.forEach((other) => {
             if (other !== video) other.pause();
           });
+          card?.classList.add('is-playing');
         });
+        video.addEventListener('pause', () => card?.classList.remove('is-playing'));
+        video.addEventListener('ended', () => card?.classList.remove('is-playing'));
       });
     </script>
   </body>

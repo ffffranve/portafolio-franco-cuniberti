@@ -11,54 +11,82 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <figure class={`card ${ratio}`} data-reveal>
-  {
-    video.kind === 'youtube' && (
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`}
-        title={video.title}
-        loading="lazy"
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-        allowfullscreen
-      />
-    )
-  }
-  {
-    video.kind === 'file' && (
-      <video
-        src={`${base}/${video.src.replace(/^\//, '')}`}
-        poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
-        playsinline
-        preload="metadata"
-        controls
-        controlslist="nodownload"
-        data-portfolio-video
-        aria-label={video.title}
-      />
-    )
-  }
-  {
-    video.kind === 'placeholder' && (
-      <div class="placeholder">
-        <span class="wide">{video.title}</span>
-      </div>
-    )
-  }
+  <div class="frame">
+    {
+      video.kind === 'youtube' && (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`}
+          title={video.title}
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowfullscreen
+        />
+      )
+    }
+    {
+      video.kind === 'file' && (
+        <video
+          src={`${base}/${video.src.replace(/^\//, '')}`}
+          poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
+          playsinline
+          preload="metadata"
+          controls
+          controlslist="nodownload"
+          data-portfolio-video
+          aria-label={video.title}
+        />
+      )
+    }
+    {
+      video.kind === 'placeholder' && (
+        <div class="placeholder">
+          <span class="wide">{video.title}</span>
+        </div>
+      )
+    }
+  </div>
 </figure>
 
 <style>
+  /* Subtle blue rounded border hugging the video's edges. */
   .card {
     margin: 0;
-    position: relative;
     overflow: hidden;
-    border-radius: 14px;
-    background: rgb(20 80 255 / 0.07);
-    outline: 1.5px solid var(--blue);
-    outline-offset: -1.5px;
+    border: 2px solid rgb(20 80 255 / 0.55);
+    border-radius: 16px;
+    background: #000;
+    background-clip: padding-box; /* keep the black out from under the translucent border */
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 0.3s ease,
+      box-shadow 0.35s ease,
+      transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .vertical {
+  /* Hover (and the video that's playing): solid border, blue glow and a small lift. */
+  .card:hover,
+  .card:focus-within,
+  .card.is-playing {
+    border-color: var(--blue);
+    box-shadow:
+      0 0 0 3px rgb(20 80 255 / 0.18),
+      0 0 22px 2px rgb(20 80 255 / 0.45),
+      0 14px 34px -12px rgb(20 80 255 / 0.55);
+    transform: translateY(-4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover,
+    .card:focus-within,
+    .card.is-playing {
+      transform: none;
+    }
+  }
+  .frame {
+    position: relative;
+  }
+  .vertical .frame {
     aspect-ratio: 9 / 16;
   }
-  .horizontal {
+  .horizontal .frame {
     aspect-ratio: 16 / 9;
   }
   iframe,
