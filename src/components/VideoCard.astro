@@ -1,0 +1,90 @@
+---
+import type { Video } from '../data/portfolio';
+
+interface Props {
+  video: Video;
+  ratio: 'vertical' | 'horizontal';
+}
+
+const { video, ratio } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<figure class={`card ${ratio}`} data-reveal>
+  {
+    video.kind === 'youtube' && (
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`}
+        title={video.title}
+        loading="lazy"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen
+      />
+    )
+  }
+  {
+    video.kind === 'file' && (
+      <video
+        src={`${base}/${video.src.replace(/^\//, '')}`}
+        poster={video.poster ? `${base}/${video.poster.replace(/^\//, '')}` : undefined}
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        controls
+        data-hover-play
+        aria-label={video.title}
+      />
+    )
+  }
+  {
+    video.kind === 'placeholder' && (
+      <div class="placeholder">
+        <span class="wide">{video.title}</span>
+      </div>
+    )
+  }
+</figure>
+
+<style>
+  .card {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    background: rgb(20 80 255 / 0.07);
+    outline: 1.5px solid var(--blue);
+    outline-offset: -1.5px;
+  }
+  .vertical {
+    aspect-ratio: 9 / 16;
+  }
+  .horizontal {
+    aspect-ratio: 16 / 9;
+  }
+  iframe,
+  video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+    display: block;
+    background: #000;
+  }
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 12px;
+    text-align: center;
+    font-size: clamp(10px, 1.1vw, 13px);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 14px,
+      rgb(20 80 255 / 0.06) 14px 15px
+    );
+  }
+</style>

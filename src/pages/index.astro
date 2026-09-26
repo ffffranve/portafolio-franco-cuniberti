@@ -1,0 +1,371 @@
+---
+import { siDiscord, siGmail, siInstagram, siWhatsapp } from 'simple-icons';
+import Base from '../layouts/Base.astro';
+import Star from '../components/Star.astro';
+import VideoCard from '../components/VideoCard.astro';
+import { contact, longVideos, profile, programs, shortVideos } from '../data/portfolio';
+
+// Split "**bold**" markers into plain and strong segments.
+const aboutParts = profile.about.split(/\*\*(.+?)\*\*/g).map((text, i) => ({ text, strong: i % 2 === 1 }));
+
+const contacts = [
+  contact.email && { icon: siGmail, label: contact.email, href: `mailto:${contact.email}` },
+  contact.discord && { icon: siDiscord, label: contact.discord, href: undefined },
+  contact.instagram && {
+    icon: siInstagram,
+    label: contact.instagram,
+    href: `https://instagram.com/${contact.instagram.replace(/^@/, '')}`,
+  },
+  contact.whatsapp && { icon: siWhatsapp, label: `+${contact.whatsapp}`, href: `https://wa.me/${contact.whatsapp}` },
+].filter(Boolean) as { icon: { path: string; title: string }; label: string; href?: string }[];
+
+const year = new Date().getFullYear();
+---
+
+<Base
+  title={`${profile.name} — Portafolio`}
+  description={`Portafolio de ${profile.name}, ${profile.role.toLowerCase()}.`}
+>
+  <main>
+    <!-- Hero -->
+    <header class="hero">
+      <h1 class="hero-title">
+        <span class="serif hero-serif" data-reveal>Portafolio<Star class="hero-star" /></span>
+        <span class="wide hero-wide" data-reveal>{profile.role}</span>
+      </h1>
+      <p class="hero-meta serif" data-reveal>
+        <span>{profile.name}</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span>Based in {profile.basedIn}</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span>Since {profile.since}</span>
+      </p>
+    </header>
+
+    <!-- About (red) + contact (red) + programs (blue) -->
+    <section class="info" aria-label="Sobre mí">
+      <div class="info-col">
+        <div class="block red" data-reveal>
+          <h2 class="block-title serif"><Star /> Sobre mí</h2>
+          <p class="about">
+            {aboutParts.map((part) => (part.strong ? <strong>{part.text}</strong> : part.text))}
+          </p>
+        </div>
+
+        {
+          programs.length > 0 && (
+            <div class="block blue" data-reveal>
+              <h2 class="block-title serif">
+                <Star /> Programas
+              </h2>
+              <ul class="programs">
+                {programs.map((p) => (
+                  <li>
+                    <span class="app-badge">{p.short}</span>
+                    {p.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="info-col">
+        <div class="block red" id="contacto" data-reveal>
+          <h2 class="block-title serif"><Star /> Contacto</h2>
+          <ul class="contacts">
+            {
+              contacts.map((c) => (
+                <li>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d={c.icon.path} />
+                  </svg>
+                  {c.href ? (
+                    <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                      {c.label}
+                    </a>
+                  ) : (
+                    <span>{c.label}</span>
+                  )}
+                  <span class="sr-only">({c.icon.title})</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects (blue) -->
+    <section class="projects" id="proyectos" aria-label="Proyectos">
+      <div class="section-head" data-reveal>
+        <h2 class="serif section-serif">Proyectos</h2>
+        <p class="wide section-wide">Videos cortos</p>
+        <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+      </div>
+      <div class="grid grid-short">
+        {shortVideos.map((video) => <VideoCard video={video} ratio="vertical" />)}
+      </div>
+
+      <div class="section-head section-head-long" data-reveal>
+        <p class="wide section-wide">Videos largos</p>
+        <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+      </div>
+      <div class="grid grid-long">
+        {longVideos.map((video) => <VideoCard video={video} ratio="horizontal" />)}
+      </div>
+    </section>
+
+    <!-- Closing (red: it's about you) -->
+    <footer class="outro red" data-reveal>
+      <p class="serif outro-serif">¿Hacemos algo juntos?<Star class="hero-star" /></p>
+      <a class="wide outro-cta" href="#contacto">Contactame</a>
+      <p class="outro-small">© {year} {profile.name}</p>
+    </footer>
+  </main>
+</Base>
+
+<style>
+  main {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: min(88svh, 900px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12vh 0 8vh;
+  }
+  .hero-title {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-serif {
+    font-size: clamp(64px, 15.5vw, 212px);
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.02em;
+  }
+  .hero-serif :global(.hero-star) {
+    width: 0.24em;
+    height: 0.24em;
+    margin-top: 0.34em;
+  }
+  .hero-wide {
+    font-size: clamp(26px, 6.1vw, 84px);
+    margin-top: -0.12em;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35em 0.9em;
+    margin: 0.9em 0 0;
+    font-size: clamp(18px, 2.2vw, 28px);
+    line-height: 1;
+  }
+  .dot {
+    width: 0.3em;
+    height: 0.3em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Info blocks */
+  .info {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(32px, 7vw, 120px);
+    padding: 6vh 0 14vh;
+  }
+  .info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .block-title {
+    display: flex;
+    align-items: center;
+    gap: 0.18em;
+    margin: 0 0 0.35em;
+    font-size: clamp(44px, 5.4vw, 72px);
+  }
+  .block-title :global(.star) {
+    width: 0.4em;
+    height: 0.4em;
+  }
+  .about {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(15px, 1.35vw, 18px);
+    font-weight: 380;
+  }
+  .about strong {
+    font-weight: 650;
+  }
+  .contacts,
+  .programs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+    font-weight: 600;
+    font-size: clamp(15px, 1.35vw, 18px);
+  }
+  .contacts li,
+  .programs li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .contacts svg {
+    width: 24px;
+    height: 24px;
+    flex: none;
+  }
+  .contacts a {
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+    transition: background-size 0.3s ease;
+  }
+  .contacts a:hover {
+    background-size: 100% 1.5px;
+  }
+  .app-badge {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--blue);
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* Projects */
+  .projects {
+    padding-bottom: 12vh;
+  }
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-head-long {
+    margin-top: 14vh;
+  }
+  .section-serif {
+    margin: 0;
+    font-size: clamp(64px, 10vw, 136px);
+  }
+  .section-wide {
+    margin: -0.08em 0 0;
+    font-size: clamp(22px, 3.6vw, 48px);
+  }
+  .chevrons {
+    width: 28px;
+    height: 28px;
+    margin-top: 18px;
+    animation: nudge 1.8s ease-in-out infinite;
+  }
+  @keyframes nudge {
+    50% {
+      transform: translateY(5px);
+    }
+  }
+  .grid {
+    display: grid;
+    gap: clamp(12px, 2vw, 28px);
+  }
+  .grid-short {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-long {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Outro */
+  .outro {
+    text-align: center;
+    padding: 10vh 0 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .outro-serif {
+    margin: 0;
+    display: inline-flex;
+    align-items: flex-start;
+    font-size: clamp(48px, 8vw, 112px);
+  }
+  .outro-serif :global(.hero-star) {
+    width: 0.26em;
+    height: 0.26em;
+    margin-top: 0.3em;
+  }
+  .outro-cta {
+    margin-top: 28px;
+    padding: 18px 34px;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: clamp(16px, 2vw, 22px);
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+  .outro-cta:hover {
+    background: var(--red);
+    color: var(--paper);
+  }
+  .outro-small {
+    margin: 10vh 0 0;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .hero-serif {
+      font-size: 22vw;
+    }
+    .hero-wide {
+      font-size: 7.4vw;
+    }
+    .info {
+      grid-template-columns: 1fr;
+    }
+    .grid-short {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-long {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
