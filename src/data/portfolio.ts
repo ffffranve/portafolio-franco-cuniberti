@@ -22,12 +22,12 @@ export const contact = {
 };
 
 export const shortVideos: Video[] = [
-  { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
   { kind: 'file', src: 'videos/corto-2-mustaccio.mp4', poster: 'videos/corto-2-mustaccio.jpg', title: 'Mustaccio' },
-  { kind: 'file', src: 'videos/corto-3-paises.mp4', poster: 'videos/corto-3-paises.jpg', title: 'Países' },
   { kind: 'file', src: 'videos/corto-4-publi.mp4', poster: 'videos/corto-4-publi.jpg', title: 'Publicidad' },
   { kind: 'file', src: 'videos/corto-5-franve.mp4', poster: 'videos/corto-5-franve.jpg', title: 'Franve' },
+  { kind: 'file', src: 'videos/corto-3-paises.mp4', poster: 'videos/corto-3-paises.jpg', title: 'Países' },
   { kind: 'file', src: 'videos/corto-6-guion.mp4', poster: 'videos/corto-6-guion.jpg', title: 'Guion' },
+  { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
 ];
 
 export const longVideos: Video[] = [
