@@ -8,9 +8,9 @@ export type Video =
 
 export const profile = {
   name: 'Franco Cuniberti',
-  role: 'Edición de video',
-  basedIn: '[Tu ciudad]',
-  since: '[Año]',
+  role: 'Editor de video',
+  // Small line under the title, separated by dots.
+  tags: ['Portafolio', 'Argentina', '2026'],
   // Words wrapped in **double asterisks** are rendered bold.
   about:
     'Soy Franco, **editor de video**. [Contá en dos o tres líneas qué hacés, para quién trabajás y qué resultados buscás.] **[Tu propuesta de valor en una frase.]**',

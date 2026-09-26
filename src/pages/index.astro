@@ -26,15 +26,18 @@ const year = new Date().getFullYear();
     <!-- Hero -->
     <header class="hero">
       <h1 class="hero-title">
-        <span class="serif hero-serif" data-reveal>Portafolio<Star class="hero-star" /></span>
+        <span class="serif hero-serif" data-reveal>{profile.name}<Star class="hero-star" /></span>
         <span class="wide hero-wide" data-reveal>{profile.role}</span>
       </h1>
       <p class="hero-meta serif" data-reveal>
-        <span>{profile.name}</span>
-        <span class="dot" aria-hidden="true"></span>
-        <span>Based in {profile.basedIn}</span>
-        <span class="dot" aria-hidden="true"></span>
-        <span>Since {profile.since}</span>
+        {
+          profile.tags.map((tag, i) => (
+            <>
+              {i > 0 && <span class="dot" aria-hidden="true" />}
+              <span>{tag}</span>
+            </>
+          ))
+        }
       </p>
     </header>
 
@@ -90,22 +93,22 @@ const year = new Date().getFullYear();
 
     <!-- Projects (blue) -->
     <section class="projects" id="proyectos" aria-label="Proyectos">
-      <div class="section-head" data-reveal>
-        <h2 class="serif section-serif">Proyectos</h2>
-        <p class="wide section-wide">Videos cortos</p>
+      <div class="section-head section-head-main" data-reveal>
+        <h2 class="serif section-serif">Proyectos<Star class="hero-star" /></h2>
         <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
         </svg>
+      </div>
+
+      <div class="section-head" data-reveal>
+        <h3 class="wide section-wide">Videos cortos</h3>
       </div>
       <div class="grid grid-short">
         {shortVideos.map((video) => <VideoCard video={video} ratio="vertical" />)}
       </div>
 
       <div class="section-head section-head-long" data-reveal>
-        <p class="wide section-wide">Videos largos</p>
-        <svg class="chevrons" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 5l6 6 6-6M6 12l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"></path>
-        </svg>
+        <h3 class="wide section-wide">Videos largos</h3>
       </div>
       <div class="grid grid-long">
         {longVideos.map((video) => <VideoCard video={video} ratio="horizontal" />)}
@@ -145,7 +148,8 @@ const year = new Date().getFullYear();
     align-items: center;
   }
   .hero-serif {
-    font-size: clamp(64px, 15.5vw, 212px);
+    font-size: clamp(56px, 11vw, 164px);
+    white-space: nowrap;
     display: inline-flex;
     align-items: flex-start;
     gap: 0.02em;
@@ -156,8 +160,8 @@ const year = new Date().getFullYear();
     margin-top: 0.34em;
   }
   .hero-wide {
-    font-size: clamp(26px, 6.1vw, 84px);
-    margin-top: -0.12em;
+    font-size: clamp(24px, 5.6vw, 78px);
+    margin-top: -0.08em;
   }
   .hero-meta {
     display: flex;
@@ -260,15 +264,25 @@ const year = new Date().getFullYear();
     text-align: center;
     margin-bottom: 48px;
   }
+  .section-head-main {
+    margin-bottom: 9vh;
+  }
   .section-head-long {
-    margin-top: 14vh;
+    margin-top: 12vh;
   }
   .section-serif {
     margin: 0;
-    font-size: clamp(64px, 10vw, 136px);
+    display: inline-flex;
+    align-items: flex-start;
+    font-size: clamp(72px, 12vw, 168px);
+  }
+  .section-serif :global(.hero-star) {
+    width: 0.22em;
+    height: 0.22em;
+    margin-top: 0.3em;
   }
   .section-wide {
-    margin: -0.08em 0 0;
+    margin: 0;
     font-size: clamp(22px, 3.6vw, 48px);
   }
   .chevrons {
@@ -349,10 +363,10 @@ const year = new Date().getFullYear();
 
   @media (max-width: 760px) {
     .hero-serif {
-      font-size: 22vw;
+      font-size: 14.5vw;
     }
     .hero-wide {
-      font-size: 7.4vw;
+      font-size: 7vw;
     }
     .info {
       grid-template-columns: 1fr;
