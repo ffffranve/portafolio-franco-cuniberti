@@ -3,10 +3,7 @@ import { siDiscord, siGmail, siInstagram, siWhatsapp } from 'simple-icons';
 import Base from '../layouts/Base.astro';
 import Star from '../components/Star.astro';
 import VideoCard from '../components/VideoCard.astro';
-import { contact, longVideos, profile, programs, shortVideos } from '../data/portfolio';
-
-// Split "**bold**" markers into plain and strong segments.
-const aboutParts = profile.about.split(/\*\*(.+?)\*\*/g).map((text, i) => ({ text, strong: i % 2 === 1 }));
+import { contact, longVideos, profile, shortVideos } from '../data/portfolio';
 
 const contacts = [
   { icon: siGmail, label: contact.email.label, href: contact.email.address && `mailto:${contact.email.address}` },
@@ -41,56 +38,6 @@ const year = new Date().getFullYear();
       </p>
     </header>
 
-    <!-- About (red) + contact (red) + programs (blue) -->
-    <section class="info" aria-label="Sobre mí">
-      <div class="info-col">
-        <div class="block red" data-reveal>
-          <h2 class="block-title serif"><Star /> Sobre mí</h2>
-          <p class="about">
-            {aboutParts.map((part) => (part.strong ? <strong>{part.text}</strong> : part.text))}
-          </p>
-        </div>
-
-        {
-          programs.length > 0 && (
-            <div class="block blue" data-reveal>
-              <h2 class="block-title serif">
-                <Star /> Programas
-              </h2>
-              <ul class="programs">
-                {programs.map((p) => (
-                  <li>
-                    <span class="app-badge">{p.short}</span>
-                    {p.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
-      </div>
-
-      <div class="info-col">
-        <div class="block red" id="contacto" data-reveal>
-          <h2 class="block-title serif"><Star /> Contacto</h2>
-          <ul class="contacts">
-            {
-              contacts.map((c) => (
-                <li>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill="currentColor" d={c.icon.path} />
-                  </svg>
-                  <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
-                    {c.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-    </section>
-
     <!-- Projects (blue) -->
     <section class="projects" id="proyectos" aria-label="Proyectos">
       <div class="section-head section-head-main" data-reveal>
@@ -115,11 +62,36 @@ const year = new Date().getFullYear();
       </div>
     </section>
 
-    <!-- Closing (red: it's about you) -->
-    <footer class="outro red" data-reveal>
-      <p class="serif outro-serif">¿Hacemos algo juntos?<Star class="hero-star" /></p>
-      <a class="wide outro-cta" href="#contacto">Contactame</a>
-      <p class="outro-small">© {year} {profile.name}</p>
+    <!-- Contact (red: it's about you) -->
+    <footer class="contact red" id="contacto">
+      <h2 class="serif contact-serif" data-reveal>Contacto<Star class="hero-star" /></h2>
+      <p class="wide contact-wide" data-reveal>¿Hacemos algo juntos?</p>
+
+      <ul class="contact-buttons" data-reveal>
+        {
+          contacts.map((c) => (
+            <li>
+              <a
+                class="contact-button"
+                href={c.href}
+                target={c.href.startsWith('http') ? '_blank' : undefined}
+                rel="noopener"
+                aria-label={c.icon.title}
+                title={c.label}
+              >
+                <span class="contact-circle">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d={c.icon.path} />
+                  </svg>
+                </span>
+                <span class="wide contact-label">{c.icon.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="contact-small">© {year} {profile.name}</p>
     </footer>
   </main>
 </Base>
@@ -180,79 +152,6 @@ const year = new Date().getFullYear();
     background: currentColor;
   }
 
-  /* Info blocks */
-  .info {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: clamp(32px, 7vw, 120px);
-    padding: 6vh 0 14vh;
-  }
-  .info-col {
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-  }
-  .block-title {
-    display: flex;
-    align-items: center;
-    gap: 0.18em;
-    margin: 0 0 0.35em;
-    font-size: clamp(44px, 5.4vw, 72px);
-  }
-  .block-title :global(.star) {
-    width: 0.4em;
-    height: 0.4em;
-  }
-  .about {
-    margin: 0;
-    max-width: 34em;
-    font-size: clamp(15px, 1.35vw, 18px);
-    font-weight: 380;
-  }
-  .about strong {
-    font-weight: 650;
-  }
-  .contacts,
-  .programs {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 18px;
-    font-weight: 600;
-    font-size: clamp(15px, 1.35vw, 18px);
-  }
-  .contacts li,
-  .programs li {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .contacts svg {
-    width: 24px;
-    height: 24px;
-    flex: none;
-  }
-  .contacts a {
-    text-decoration: none;
-    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
-    transition: background-size 0.3s ease;
-  }
-  .contacts a:hover {
-    background-size: 100% 1.5px;
-  }
-  .app-badge {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    background: var(--blue);
-    color: var(--paper);
-    font-weight: 700;
-    font-size: 15px;
-  }
-
   /* Projects */
   .projects {
     padding-bottom: 12vh;
@@ -276,7 +175,8 @@ const year = new Date().getFullYear();
     align-items: flex-start;
     font-size: clamp(72px, 12vw, 168px);
   }
-  .section-serif :global(.hero-star) {
+  .section-serif :global(.hero-star),
+  .contact-serif :global(.hero-star) {
     width: 0.22em;
     height: 0.22em;
     margin-top: 0.3em;
@@ -312,53 +212,72 @@ const year = new Date().getFullYear();
     margin-left: calc((100% - var(--long-width)) / 2);
   }
 
-  /* Outro */
-  .outro {
+  /* Contact */
+  .contact {
     text-align: center;
-    padding: 10vh 0 6vh;
+    padding: 4vh 0 6vh;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .outro-serif {
+  .contact-serif {
     margin: 0;
     display: inline-flex;
     align-items: flex-start;
-    font-size: clamp(48px, 8vw, 112px);
+    font-size: clamp(72px, 12vw, 168px);
   }
-  .outro-serif :global(.hero-star) {
-    width: 0.26em;
-    height: 0.26em;
-    margin-top: 0.3em;
+  .contact-wide {
+    margin: 0;
+    font-size: clamp(18px, 2.6vw, 34px);
   }
-  .outro-cta {
-    margin-top: 28px;
-    padding: 18px 34px;
-    border: 2px solid currentColor;
-    border-radius: 999px;
+  .contact-buttons {
+    list-style: none;
+    margin: clamp(48px, 8vh, 80px) 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(24px, 5vw, 72px);
+  }
+  .contact-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
     text-decoration: none;
-    font-size: clamp(16px, 2vw, 22px);
+  }
+  .contact-circle {
+    display: grid;
+    place-items: center;
+    width: clamp(92px, 11vw, 150px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid currentColor;
     transition:
       background 0.25s ease,
-      color 0.25s ease;
+      color 0.25s ease,
+      transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .outro-cta:hover {
+  .contact-circle svg {
+    width: 42%;
+    height: 42%;
+  }
+  .contact-label {
+    font-size: clamp(11px, 1vw, 14px);
+  }
+  .contact-button:hover .contact-circle,
+  .contact-button:focus-visible .contact-circle {
     background: var(--red);
     color: var(--paper);
+    transform: translateY(-6px) scale(1.04);
   }
-  .outro-small {
-    margin: 10vh 0 0;
+  .contact-button:focus-visible {
+    outline: none;
+  }
+  .contact-small {
+    margin: 12vh 0 0;
     font-size: 13px;
     opacity: 0.8;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
   }
 
   @media (max-width: 760px) {
@@ -367,9 +286,6 @@ const year = new Date().getFullYear();
     }
     .hero-wide {
       font-size: 7vw;
-    }
-    .info {
-      grid-template-columns: 1fr;
     }
     .grid-short {
       grid-template-columns: repeat(2, 1fr);

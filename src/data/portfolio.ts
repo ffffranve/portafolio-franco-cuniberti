@@ -1,5 +1,4 @@
 // Everything you'll want to edit lives in this file.
-// Texts marked with [ ] are placeholders: replace them with your own.
 
 export type Video =
   | { kind: 'youtube'; id: string; title: string }
@@ -11,24 +10,16 @@ export const profile = {
   role: 'Editor de video',
   // Small line under the title, separated by dots.
   tags: ['Portafolio', 'Argentina', '2026'],
-  // Words wrapped in **double asterisks** are rendered bold.
-  about:
-    'Soy Franco, **editor de video**. [Contá en dos o tres líneas qué hacés, para quién trabajás y qué resultados buscás.] **[Tu propuesta de valor en una frase.]**',
 };
 
-// Leave a url empty ('') to hide that contact. `label` is the text shown on the page.
+// Contact buttons at the bottom. Leave a url empty ('') to hide that button.
+// `label` is the tooltip shown when hovering the button.
 export const contact = {
-  email: { address: 'cunibertifranco@gmail.com', label: 'cunibertifranco@gmail.com' }, // plain address, e.g. nombre@gmail.com (opens a new email)
+  email: { address: 'cunibertifranco@gmail.com', label: 'cunibertifranco@gmail.com' }, // opens a new email
   discord: { url: 'https://discord.com/users/522218360914837528', label: 'Discord' },
   whatsapp: { url: 'https://api.whatsapp.com/qr/SFFIXYY3KH43A1?autoload=1&app_absent=0', label: 'WhatsApp' },
   instagram: { url: '', label: 'Instagram' },
 };
-
-// Leave the list empty to hide the "Programas" block.
-export const programs: { short: string; name: string }[] = [
-  // { short: 'Pr', name: 'Premiere Pro' },
-  // { short: 'Ae', name: 'After Effects' },
-];
 
 export const shortVideos: Video[] = [
   { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
