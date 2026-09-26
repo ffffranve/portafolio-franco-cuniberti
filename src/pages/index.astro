@@ -9,15 +9,11 @@ import { contact, longVideos, profile, programs, shortVideos } from '../data/por
 const aboutParts = profile.about.split(/\*\*(.+?)\*\*/g).map((text, i) => ({ text, strong: i % 2 === 1 }));
 
 const contacts = [
-  contact.email && { icon: siGmail, label: contact.email, href: `mailto:${contact.email}` },
-  contact.discord && { icon: siDiscord, label: contact.discord, href: undefined },
-  contact.instagram && {
-    icon: siInstagram,
-    label: contact.instagram,
-    href: `https://instagram.com/${contact.instagram.replace(/^@/, '')}`,
-  },
-  contact.whatsapp && { icon: siWhatsapp, label: `+${contact.whatsapp}`, href: `https://wa.me/${contact.whatsapp}` },
-].filter(Boolean) as { icon: { path: string; title: string }; label: string; href?: string }[];
+  { icon: siGmail, label: contact.email.label, href: contact.email.address && `mailto:${contact.email.address}` },
+  { icon: siDiscord, label: contact.discord.label, href: contact.discord.url },
+  { icon: siWhatsapp, label: contact.whatsapp.label, href: contact.whatsapp.url },
+  { icon: siInstagram, label: contact.instagram.label, href: contact.instagram.url },
+].filter((c) => c.href);
 
 const year = new Date().getFullYear();
 ---
@@ -81,14 +77,9 @@ const year = new Date().getFullYear();
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d={c.icon.path} />
                   </svg>
-                  {c.href ? (
-                    <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
-                      {c.label}
-                    </a>
-                  ) : (
-                    <span>{c.label}</span>
-                  )}
-                  <span class="sr-only">({c.icon.title})</span>
+                  <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                    {c.label}
+                  </a>
                 </li>
               ))
             }

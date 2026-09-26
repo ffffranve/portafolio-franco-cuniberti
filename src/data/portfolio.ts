@@ -16,12 +16,12 @@ export const profile = {
     'Soy Franco, **editor de video**. [Contá en dos o tres líneas qué hacés, para quién trabajás y qué resultados buscás.] **[Tu propuesta de valor en una frase.]**',
 };
 
-// Leave a value empty ('') to hide that contact.
+// Leave a url empty ('') to hide that contact. `label` is the text shown on the page.
 export const contact = {
-  email: '[tu-mail@ejemplo.com]',
-  discord: '[tu-usuario]',
-  instagram: '',
-  whatsapp: '', // international format without spaces, e.g. 5491112345678
+  email: { address: '', label: 'Gmail' }, // plain address, e.g. nombre@gmail.com (opens a new email)
+  discord: { url: 'https://discord.com/users/522218360914837528', label: 'Discord' },
+  whatsapp: { url: 'https://api.whatsapp.com/qr/SFFIXYY3KH43A1?autoload=1&app_absent=0', label: 'WhatsApp' },
+  instagram: { url: '', label: 'Instagram' },
 };
 
 // Leave the list empty to hide the "Programas" block.
