@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+// Same files global.css loads: preloading them lets the text paint in its real fonts from the start.
+import serifFont from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+import wideFont from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import bodyFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -21,8 +25,24 @@ const { title, description } = Astro.props;
     <meta name="theme-color" content="#f4f2ee" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
     <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/apple-touch-icon.png`} />
+    {
+      [serifFont, wideFont, bodyFont].map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ))
+    }
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Keep the page hidden until the fonts are ready, so it never flashes in a fallback font.
+      // The 2 s cap means a slow connection still shows the page.
+      document.documentElement.classList.add('fonts-loading');
+      Promise.race([
+        Promise.all([
+          document.fonts.load('italic 400 1em "Instrument Serif"'),
+          document.fonts.load('800 1em "Archivo Variable"'),
+          document.fonts.load('400 1em "Inter Variable"'),
+        ]).catch(() => {}),
+        new Promise((r) => setTimeout(r, 2000)),
+      ]).then(() => document.documentElement.classList.remove('fonts-loading'));
       // Always open at the top (the name), never at a remembered position or a #section link.
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       if (location.hash) history.replaceState(null, '', location.pathname + location.search);
