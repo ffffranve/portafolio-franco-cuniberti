@@ -23,10 +23,10 @@ export const contact = {
 
 export const shortVideos: Video[] = [
   { kind: 'file', src: 'videos/corto-2-mustaccio.mp4', poster: 'videos/corto-2-mustaccio.jpg', title: 'Mustaccio' },
-  { kind: 'file', src: 'videos/corto-7-bitcoin-3.mp4', poster: 'videos/corto-7-bitcoin-3.jpg', title: 'Dos pizzas' },
+  { kind: 'file', src: 'videos/corto-9-elon.mp4', poster: 'videos/corto-9-elon.jpg', title: 'Elon' },
   { kind: 'file', src: 'videos/corto-5-franve.mp4', poster: 'videos/corto-5-franve.jpg', title: 'Franve' },
   { kind: 'file', src: 'videos/corto-4-publi.mp4', poster: 'videos/corto-4-publi.jpg', title: 'Publicidad' },
-  { kind: 'file', src: 'videos/corto-8-doge.mp4', poster: 'videos/corto-8-doge.jpg', title: 'Doge' },
+  { kind: 'file', src: 'videos/corto-7-bitcoin-3.mp4', poster: 'videos/corto-7-bitcoin-3.jpg', title: 'Dos pizzas' },
   { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
 ];
 
