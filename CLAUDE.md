@@ -4,8 +4,8 @@ This folder (`C:\Users\AMD\portafolio`) is the only source of the portfolio. Edi
 `Desktop\Portafolio Fire Base` is an old copy that ChatGPT edited; its changes were merged here on 2026-10-29. Do not edit it.
 
 ## Sites
-- Main site: https://franco-cuniberti.web.app (Firebase Hosting, site `franco-cuniberti`, project `portafolio-fc`).
-- https://portafolio-fc.web.app: 301 redirect to the main site (second entry in `firebase.json`).
+- Main site: https://portafolio-franco-cuniberti.web.app (Firebase Hosting, site `portafolio-franco-cuniberti`, project `portafolio-fc`).
+- https://portafolio-fc.web.app and https://franco-cuniberti.web.app: 301 redirects to the main site (other entries in `firebase.json`).
 - GitHub Pages (https://ffffranve.github.io/portafolio-franco-cuniberti/): serves only `github-redirect/`, a page that forwards to the main site.
 
 ## Publish a change
@@ -24,4 +24,4 @@ In PowerShell use `firebase.cmd` (script execution is blocked).
 
 ## Google
 - `public/robots.txt`, `public/sitemap.xml`, and JSON-LD in `src/layouts/Base.astro`.
-- Search Console: URL-prefix property `https://franco-cuniberti.web.app`, verified with `public/google8a0a16b8011474d6.html` (never delete it).
+- Search Console: URL-prefix property `https://portafolio-franco-cuniberti.web.app`, verified with `public/google8a0a16b8011474d6.html` (never delete it).
