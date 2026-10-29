@@ -1,0 +1,50 @@
+<!-- Vector curves follow the original GIF; individual points yield to the cursor. -->
+<div class="page-details" aria-hidden="true">
+  <svg class="edge-line edge-line-top" viewBox="0 0 270 260" data-elastic-line>
+    <path d="M10 -8C25 40 80 53 140 63C195 72 222 101 238 151C253 201 254 224 276 251" />
+    <path d="M10 -8C25 40 80 53 140 63C195 72 222 101 238 151C253 201 254 224 276 251" />
+    <path d="M10 -8C25 40 80 53 140 63C195 72 222 101 238 151C253 201 254 224 276 251" />
+  </svg>
+  <svg class="edge-line edge-line-bottom" viewBox="0 0 220 226" data-elastic-line>
+    <path d="M-8 -1C28 9 60 9 79 32C110 61 107 101 121 140C139 189 173 187 212 229" />
+    <path d="M-8 -1C28 9 60 9 79 32C110 61 107 101 121 140C139 189 173 187 212 229" />
+    <path d="M-8 -1C28 9 60 9 79 32C110 61 107 101 121 140C139 189 173 187 212 229" />
+  </svg>
+</div>
+
+<script>
+  import { enableElasticLines } from '../scripts/elastic-lines';
+  enableElasticLines();
+</script>
+
+<style>
+  .page-details {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .edge-line {
+    position: absolute;
+    display: block;
+    overflow: visible;
+    fill: none;
+    stroke: #f51c17;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .edge-line path:nth-child(1) { stroke-width: 1.25; }
+  .edge-line path:nth-child(2) { stroke-width: 0.85; opacity: 0.85; }
+  .edge-line path:nth-child(3) { stroke-width: 0.6; opacity: 0.65; }
+  .edge-line-top {
+    top: 0;
+    right: 0;
+    width: clamp(110px, 20vw, 340px);
+  }
+  .edge-line-bottom {
+    bottom: 0;
+    left: 0;
+    width: clamp(82px, 14vw, 230px);
+  }
+</style>

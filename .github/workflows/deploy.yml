@@ -1,8 +1,13 @@
-name: Deploy to GitHub Pages
+name: Redirect GitHub Pages to the main site
+
+# The portfolio lives on Firebase Hosting (https://franco-cuniberti.web.app).
+# GitHub Pages only serves a tiny page that forwards old links there,
+# so Google sees a single site instead of two copies.
 
 on:
   push:
     branches: [main]
+    paths: [github-redirect/**, .github/workflows/deploy.yml]
   workflow_dispatch:
 
 permissions:
@@ -17,13 +22,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SITE: https://${{ github.repository_owner }}.github.io
-      # A repo named <user>.github.io is served from the root; any other repo from /<repo>/.
-      BASE_PATH: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}/', github.event.repository.name) }}
     steps:
       - uses: actions/checkout@v4
-      - uses: withastro/action@v3
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: github-redirect
 
   deploy:
     needs: build

@@ -11,6 +11,9 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const siteUrl = 'https://franco-cuniberti.web.app/';
+const shareImage = new URL('portafolio-social-v5.gif', siteUrl).href;
+const shareImageAlt = 'Franco Cuniberti, editor de video. Texto rojo fijo sobre fondo blanco claro, con líneas curvas animadas en las esquinas.';
 ---
 
 <!doctype html>
@@ -20,11 +23,46 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={siteUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="theme-color" content="#f4f2ee" />
+    <meta property="og:site_name" content="Franco Cuniberti — Portafolio" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:type" content="image/gif" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="420" />
+    <meta property="og:image:alt" content={shareImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={shareImageAlt} />
+    <meta name="theme-color" content="#fefefb" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
     <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/apple-touch-icon.png`} />
+    <!-- Tells Google this page is Franco Cuniberti's video editing portfolio. -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        url: siteUrl,
+        name: title,
+        inLanguage: 'es-AR',
+        mainEntity: {
+          '@type': 'Person',
+          name: 'Franco Cuniberti',
+          jobTitle: 'Editor de video',
+          email: 'mailto:cunibertifranco@gmail.com',
+          url: siteUrl,
+          image: shareImage,
+          address: { '@type': 'PostalAddress', addressCountry: 'AR' },
+        },
+      })}
+    />
     {
       [serifFont, wideFont, bodyFont].map((href) => (
         <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
