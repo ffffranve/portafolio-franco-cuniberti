@@ -24,4 +24,4 @@ In PowerShell use `firebase.cmd` (script execution is blocked).
 
 ## Google
 - `public/robots.txt`, `public/sitemap.xml`, and JSON-LD in `src/layouts/Base.astro`.
-- Search Console: URL-prefix property `https://franco-cuniberti.web.app`, verified with an HTML meta tag in `Base.astro`.
+- Search Console: URL-prefix property `https://franco-cuniberti.web.app`, verified with `public/google8a0a16b8011474d6.html` (never delete it).
