@@ -112,7 +112,9 @@ const year = new Date().getFullYear();
         </p>
         <a
           class="wide offer-button"
-          href={`mailto:${contact.email.address}?subject=${encodeURIComponent('Quiero un portafolio web')}`}
+          href={contact.whatsapp.url}
+          target="_blank"
+          rel="noopener"
         >
           Pedí el tuyo <span aria-hidden="true">→</span>
         </a>
@@ -374,6 +376,7 @@ const year = new Date().getFullYear();
   }
   .offer-head {
     grid-row: span 2;
+    text-align: center; /* the two lines have different widths: center them on each other */
   }
   .offer .offer-text {
     margin: 0;
