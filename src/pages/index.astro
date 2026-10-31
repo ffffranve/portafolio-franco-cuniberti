@@ -101,6 +101,21 @@ const year = new Date().getFullYear();
         }
       </ul>
 
+      <!-- Side offer: Franco also sells portfolios like this one -->
+      <aside class="offer" data-reveal>
+        <p class="wide offer-kicker">Portafolios web</p>
+        <p class="serif offer-title">¿Querés uno como este?</p>
+        <p class="offer-text">
+          También hago portafolios igual de producidos que este: diseño, animaciones y tus videos listos para mostrar.
+        </p>
+        <a
+          class="wide offer-button"
+          href={`mailto:${contact.email.address}?subject=${encodeURIComponent('Quiero un portafolio web')}`}
+        >
+          Pedí el tuyo <span aria-hidden="true">→</span>
+        </a>
+      </aside>
+
       <p class="contact-small">© {year} {profile.name}</p>
     </footer>
   </main>
@@ -340,8 +355,52 @@ const year = new Date().getFullYear();
   .contact-button:focus-visible {
     outline: none;
   }
+  /* Offer card: quiet thin outline, so it reads as a note after the contact buttons. */
+  .offer {
+    margin: clamp(72px, 12vh, 120px) 0 0;
+    width: min(100%, 640px);
+    padding: clamp(28px, 4vw, 44px) clamp(22px, 4vw, 48px);
+    border: 1.5px solid rgb(var(--accent-rgb) / 0.35);
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .offer-kicker {
+    margin: 0;
+    font-size: clamp(22px, 3vw, 34px);
+    letter-spacing: 0.02em;
+  }
+  .offer-title {
+    margin: 10px 0 0;
+    font-size: clamp(40px, 5.4vw, 64px);
+    line-height: 0.95;
+  }
+  .offer-text {
+    margin: 16px 0 0;
+    max-width: 30em;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .offer-button {
+    margin-top: 24px;
+    padding: 13px 24px;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    font-size: 12px;
+    text-decoration: none;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+  .offer-button:hover,
+  .offer-button:focus-visible {
+    background: var(--accent);
+    color: var(--paper);
+    outline: none;
+  }
   .contact-small {
-    margin: 12vh 0 0;
+    margin: 10vh 0 0;
     font-size: 13px;
     opacity: 0.8;
   }
