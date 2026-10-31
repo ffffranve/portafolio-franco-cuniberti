@@ -5,3 +5,6 @@ dist/
 
 # Firebase deploy cache
 .firebase/
+
+# Videos not on the site (kept locally only)
+videos-sin-usar/
