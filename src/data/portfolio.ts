@@ -32,5 +32,5 @@ export const shortVideos: Video[] = [
 
 export const longVideos: Video[] = [
   { kind: 'file', src: 'videos/largo-1-pulpos-2.mp4', poster: 'videos/largo-1-pulpos-2.jpg', title: 'Pulpos' },
-  { kind: 'file', src: 'videos/largo-2-sin-violencia.mp4', poster: 'videos/largo-2-sin-violencia.jpg', title: 'Sin violencia' },
+  { kind: 'file', src: 'videos/largo-2-podcast-mitico.mp4', poster: 'videos/largo-2-podcast-mitico.jpg', title: 'Podcast mítico' },
 ];
