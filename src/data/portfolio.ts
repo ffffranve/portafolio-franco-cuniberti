@@ -22,15 +22,15 @@ export const contact = {
 };
 
 export const shortVideos: Video[] = [
-  { kind: 'file', src: 'videos/corto-2-mustaccio.mp4', poster: 'videos/corto-2-mustaccio.jpg', title: 'Mustaccio' },
-  { kind: 'file', src: 'videos/corto-9-elon-v9.mp4', poster: 'videos/corto-9-elon-v9.jpg', title: 'Elon' },
-  { kind: 'file', src: 'videos/corto-5-franve.mp4', poster: 'videos/corto-5-franve.jpg', title: 'Franve' },
-  { kind: 'file', src: 'videos/corto-4-publi.mp4', poster: 'videos/corto-4-publi.jpg', title: 'Publicidad' },
-  { kind: 'file', src: 'videos/corto-7-bitcoin-3.mp4', poster: 'videos/corto-7-bitcoin-3.jpg', title: 'Dos pizzas' },
-  { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell.jpg', title: 'Mixwell' },
+  { kind: 'file', src: 'videos/corto-2-mustaccio.mp4', poster: 'videos/corto-2-mustaccio-poster2.jpg', title: 'Mustaccio' },
+  { kind: 'file', src: 'videos/corto-9-elon-v9.mp4', poster: 'videos/corto-9-elon-v9-poster2.jpg', title: 'Elon' },
+  { kind: 'file', src: 'videos/corto-5-franve.mp4', poster: 'videos/corto-5-franve-poster2.jpg', title: 'Franve' },
+  { kind: 'file', src: 'videos/corto-4-publi.mp4', poster: 'videos/corto-4-publi-poster2.jpg', title: 'Publicidad' },
+  { kind: 'file', src: 'videos/corto-7-bitcoin-3.mp4', poster: 'videos/corto-7-bitcoin-3-poster2.jpg', title: 'Dos pizzas' },
+  { kind: 'file', src: 'videos/corto-1-mixwell.mp4', poster: 'videos/corto-1-mixwell-poster2.jpg', title: 'Mixwell' },
 ];
 
 export const longVideos: Video[] = [
-  { kind: 'file', src: 'videos/largo-1-pulpos-2.mp4', poster: 'videos/largo-1-pulpos-2.jpg', title: 'Pulpos' },
+  { kind: 'file', src: 'videos/largo-1-pulpos-2.mp4', poster: 'videos/largo-1-pulpos-2-poster2.jpg', title: 'Pulpos' },
   { kind: 'file', src: 'videos/largo-2-podcast-mitico.mp4', poster: 'videos/largo-2-podcast-mitico-poster2.jpg', title: 'Podcast mítico' },
 ];
